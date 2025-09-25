@@ -32,12 +32,12 @@
     <main class="game-container">
         <div class="board">
             <div class="row">
-                <div class="tile" data-state="present">字</div>
-                <div class="tile" data-state="absent">母</div>
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
             </div>
             <div class="row">
-                <div class="tile" data-state="correct">汉</div>
-                <div class="tile" data-state="correct">字</div>
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
             </div>
             <div class="row">
                 <div class="tile" data-state="empty"></div>
@@ -113,6 +113,11 @@
             </div>
         </div>
 
+        <div class="input-container">
+            <input type="text" id="word_input" name="word_input" required placeholder="Type 2 chinese characters here">
+            <input type="submit" onclick="setGuess()" value="Submit">
+        </div>
+
         <main class="game-container">
             <div class="board">
                 <!-- Your existing board content -->
@@ -136,9 +141,17 @@
                 ['国家', 'guó jiā', 'Country/Home country']
             ]
 
-            async function loadGame() {
-                let words;
+            let words;
+            let finished = false;
 
+            let word_hanzi;
+            let word_pinyin;
+            let word_def;
+
+            let guess = '';
+            let guess_number = 0;
+
+            async function loadGame() {
                 try {
                     // Fetch the CSV file
                     const response = await fetch('words.csv');
@@ -165,7 +178,7 @@
                 console.log(words)
 
                 const i = Math.floor(Math.random() * words.length);
-                const [word_hanzi, word_pinyin, word_def] = words[i]
+                [word_hanzi, word_pinyin, word_def] = words[i]
 
                 console.log(word_hanzi, word_pinyin, word_def)
             }
@@ -265,30 +278,139 @@
                 keyboard.appendChild(functionRow);
             }
 
+            function tryGuess() {
+                // Check if the word is valid
+                const exists = words.some(row => row[0] === guess);
+                if (exists) {
+                    console.log('Word found!');
+                    // let the player win when correct
+
+                    // Get all rows in the board
+                    const rows = document.querySelectorAll('.board .row');
+                    if (guess_number >= rows.length) return; // safety
+
+                    // Select the current row
+                    const currentRow = rows[guess_number];
+                    const tiles = currentRow.querySelectorAll('.tile');
+
+                    // Fill in the hint colors in the html and check with the word_hanzi
+                    for (let i = 0; i < tiles.length; i++) {
+                        tiles[i].textContent = guess[i];
+                        if (word_hanzi.includes(guess[i]) && word_hanzi[i] == guess[i]) {
+                            tiles[i].setAttribute('data-state', 'correct');
+                        } else if (word_hanzi.includes(guess[i]) && word_hanzi[i] != guess[i]) {
+                            tiles[i].setAttribute('data-state', 'present');
+                        } else {
+                            tiles[i].setAttribute('data-state', 'absent');
+                        } 
+                    }
+
+                    if (word_hanzi == guess) {
+                        console.log('You Win!');
+                        alert(`You WIN!, Answer: ${word_hanzi}, ${word_pinyin} \n ${word_def}`);
+                        finished = true;
+                        return;
+                    }
+
+                    // Step to the next guess
+                    guess_number += 1;
+                    guess = '';
+
+                    if (guess_number >= 20) {
+                        console.log('You Lose!');
+                        alert(`You Lose, Answer: ${word_hanzi}, ${word_pinyin} \n ${word_def}`);
+                        finished = true;
+                        return;
+                    }
+                } else {
+                    //console.log('Word not found.');
+                    // Spawn dialog window informing about what went wrong
+                    if (guess.length < 2) {
+                        console.log('Word too short.');
+                        alert('Word too short.');
+                    } else {
+                        console.log('Word is not a valid HSK 3 word.')
+                        alert('Word is not a valid HSK 3 word.');
+                    }
+                }
+            }
+            
+            // Update the squares in the html
+            function updateGuessDisplay() {
+                // Get all rows in the board
+                const rows = document.querySelectorAll('.board .row');
+                if (guess_number >= rows.length) return; // safety
+
+                // Select the current row
+                const currentRow = rows[guess_number];
+                const tiles = currentRow.querySelectorAll('.tile');
+
+                // Fill the tiles with guess characters or empty
+                for (let i = 0; i < tiles.length; i++) {
+                    if (i < guess.length) {
+                        tiles[i].textContent = guess[i];
+                        tiles[i].setAttribute('data-state', 'filled');
+                    } else {
+                        tiles[i].textContent = '';
+                        tiles[i].setAttribute('data-state', 'empty');
+                    }
+                }
+            }
+
+            function setGuess() {
+                let inputField = document.getElementById("word_input");
+
+                guess = inputField.value.slice(0,2);
+                if (!finished) { updateGuessDisplay(); }
+            }
+
             // Character input handler
             function handleCharacterInput(character) {
                 console.log('Character pressed:', character);
-                // Add your game logic here to handle character input
-                // For example: add the character to the current active tile
+                // Add character to guess if still shorter than 2
+                if (guess.length < 2) {
+                    guess += character;
+                }
+                console.log(guess);
+                if (!finished) { updateGuessDisplay(); }
             }
 
             // Enter key handler
             function handleEnter() {
                 console.log('Enter pressed');
-                // Add your game logic here to handle Enter key
-                // For example: submit the current guess
+                
+                if (!finished) { tryGuess(); }
             }
 
             // Backspace key handler
             function handleBackspace() {
                 console.log('Backspace pressed');
-                // Add your game logic here to handle Backspace
-                // For example: remove the last character from the current guess
+                // Remove character from guess
+                guess = guess.slice(0, -1);
+                console.log(guess);
+                if (!finished) { updateGuessDisplay(); }
             }
 
             // Initialize the keyboard when the page loads
             document.addEventListener('DOMContentLoaded', loadGame);
             document.addEventListener('DOMContentLoaded', loadCharacterKeyboard);
+            
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    if (guess != '') {
+                        event.preventDefault();
+                    }
+                    handleEnter();
+                }
+            });
+            
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Backspace' && guess != '') {
+                    handleBackspace();
+                    // Prevent browser from going back
+                    event.preventDefault();
+                }
+            });
         </script>
     </main>
 
