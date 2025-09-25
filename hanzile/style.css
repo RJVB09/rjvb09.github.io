@@ -152,7 +152,7 @@ body {
     border: none;
     background-color: var(--key-bg);
     color: var(--key-color);
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
     margin: 0 3px;
     cursor: pointer;
