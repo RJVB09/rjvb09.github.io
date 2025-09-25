@@ -18,3 +18,4 @@ print(len(characters))
 df = pd.DataFrame(characters, columns=['character'])
 
 df.to_csv('hanzile/characters.csv')
+df.to_json('hanzile/characters.json')

@@ -113,46 +113,139 @@
             </div>
         </div>
 
-        <div class="keyboard">
-            <div class="keyboard-row">
-                <button class="key" data-key="q">q</button>
-                <button class="key" data-key="w">w</button>
-                <button class="key" data-state="correct" data-key="e">e</button>
-                <button class="key" data-state="correct" data-key="r">r</button>
-                <button class="key" data-state="absent" data-key="t">t</button>
-                <button class="key" data-key="y">y</button>
-                <button class="key" data-key="u">u</button>
-                <button class="key" data-key="i">i</button>
-                <button class="key" data-key="o">o</button>
-                <button class="key" data-state="correct" data-key="p">p</button>
+        <main class="game-container">
+            <div class="board">
+                <!-- Your existing board content -->
             </div>
-            <div class="keyboard-row">
-                <button class="key" data-state="correct" data-key="a">a</button>
-                <button class="key" data-state="absent" data-key="s">s</button>
-                <button class="key" data-state="correct" data-key="d">d</button>
-                <button class="key" data-state="absent" data-key="f">f</button>
-                <button class="key" data-state="absent" data-key="g">g</button>
-                <button class="key" data-key="h">h</button>
-                <button class="key" data-key="j">j</button>
-                <button class="key" data-key="k">k</button>
-                <button class="key" data-key="l">l</button>
+
+            <div class="keyboard" id="character-keyboard">
+                <!-- This will be populated by JavaScript -->
             </div>
-            <div class="keyboard-row">
-                <button class="key wide" data-key="enter">Enter</button>
-                <button class="key" data-key="z">z</button>
-                <button class="key" data-key="x">x</button>
-                <button class="key" data-key="c">c</button>
-                <button class="key" data-key="v">v</button>
-                <button class="key" data-key="b">b</button>
-                <button class="key" data-key="n">n</button>
-                <button class="key" data-state="absent" data-key="m">m</button>
-                <button class="key wide" data-key="backspace">
+        </main>
+
+        <script>
+            // Function to load and parse the CSV file
+            async function loadCharacterKeyboard() {
+                try {
+                    // Fetch the CSV file
+                    const response = await fetch('characters.csv');
+                    const csvText = await response.text();
+                    
+                    // Parse CSV (simple parsing - assumes no commas in data)
+                    const lines = csvText.trim().split('\n');
+                    const characters = [];
+                    
+                    // Skip header row and process each line
+                    for (let i = 1; i < lines.length; i++) {
+                        const [index, character] = lines[i].split(',');
+                        if (character && character.trim()) {
+                            characters.push(character.trim());
+                        }
+                    }
+                    
+                    // Generate keyboard layout
+                    generateKeyboard(characters);
+                    
+                } catch (error) {
+                    console.error('Error loading character keyboard:', error);
+                    // Fallback to a default set of characters if CSV fails to load
+                    const fallbackCharacters = ['的', '一', '是', '在', '不', '了', '有', '和', '人', '这', 
+                                            '中', '大', '为', '上', '个', '国', '我', '以', '要', '他',
+                                            '时', '来', '用', '们', '生', '到', '作', '地', '于', '出'];
+                    generateKeyboard(fallbackCharacters);
+                }
+            }
+
+            // Function to generate the keyboard layout
+            function generateKeyboard(characters) {
+                const keyboard = document.getElementById('character-keyboard');
+                keyboard.innerHTML = '';
+                
+                // Determine how to split characters into rows
+                // You can adjust these values based on your preferred layout
+                const charsPerRow = 10;
+                const rows = Math.ceil(characters.length / charsPerRow);
+                
+                // Create keyboard rows
+                for (let row = 0; row < rows; row++) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'keyboard-row';
+                    
+                    // Get characters for this row
+                    const startIndex = row * charsPerRow;
+                    const endIndex = Math.min(startIndex + charsPerRow, characters.length);
+                    const rowCharacters = characters.slice(startIndex, endIndex);
+                    
+                    // Create keys for each character in this row
+                    rowCharacters.forEach(char => {
+                        const keyButton = document.createElement('button');
+                        keyButton.className = 'key';
+                        keyButton.textContent = char;
+                        keyButton.setAttribute('data-key', char);
+                        keyButton.setAttribute('aria-label', `Character ${char}`);
+                        
+                        // Add click event handler
+                        keyButton.addEventListener('click', () => {
+                            handleCharacterInput(char);
+                        });
+                        
+                        rowDiv.appendChild(keyButton);
+                    });
+                    
+                    keyboard.appendChild(rowDiv);
+                }
+                
+                // Add special function keys row (Enter, Backspace, etc.)
+                const functionRow = document.createElement('div');
+                functionRow.className = 'keyboard-row';
+                
+                // Enter key
+                const enterKey = document.createElement('button');
+                enterKey.className = 'key wide';
+                enterKey.textContent = 'Enter';
+                enterKey.setAttribute('data-key', 'enter');
+                enterKey.addEventListener('click', handleEnter);
+                functionRow.appendChild(enterKey);
+                
+                // Backspace key
+                const backspaceKey = document.createElement('button');
+                backspaceKey.className = 'key wide';
+                backspaceKey.innerHTML = `
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path fill="currentColor" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>
                     </svg>
-                </button>
-            </div>
-        </div>
+                `;
+                backspaceKey.setAttribute('data-key', 'backspace');
+                backspaceKey.addEventListener('click', handleBackspace);
+                functionRow.appendChild(backspaceKey);
+                
+                keyboard.appendChild(functionRow);
+            }
+
+            // Character input handler
+            function handleCharacterInput(character) {
+                console.log('Character pressed:', character);
+                // Add your game logic here to handle character input
+                // For example: add the character to the current active tile
+            }
+
+            // Enter key handler
+            function handleEnter() {
+                console.log('Enter pressed');
+                // Add your game logic here to handle Enter key
+                // For example: submit the current guess
+            }
+
+            // Backspace key handler
+            function handleBackspace() {
+                console.log('Backspace pressed');
+                // Add your game logic here to handle Backspace
+                // For example: remove the last character from the current guess
+            }
+
+            // Initialize the keyboard when the page loads
+            document.addEventListener('DOMContentLoaded', loadCharacterKeyboard);
+        </script>
     </main>
 
 </body>
