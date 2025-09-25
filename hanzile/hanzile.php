@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle Game</title>
-    <link rel="stylesheet" href="/hanzile/style.css">
+    <link rel="icon" type="image/x-icon" href="hanzile_icon.png">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="header">
@@ -13,7 +14,7 @@
                 <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
             </svg>
         </button>
-        <h1>Wordle</h1>
+        <h1>汉字le</h1>
         <div>
             <button aria-label="Statistics">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -28,47 +29,89 @@
         </div>
     </header>
 
+    <?php
+    echo "My first PHP script!";
+    ?>
+
     <main class="game-container">
         <div class="board">
             <div class="row">
-                <div class="tile" data-state="absent">g</div>
-                <div class="tile" data-state="present">a</div>
-                <div class="tile" data-state="absent">m</div>
-                <div class="tile" data-state="present">e</div>
-                <div class="tile" data-state="absent">s</div>
+                <div class="tile" data-state="present">字</div>
+                <div class="tile" data-state="absent">母</div>
             </div>
             <div class="row">
-                <div class="tile" data-state="present">a</div>
-                <div class="tile" data-state="absent">f</div>
-                <div class="tile" data-state="absent">t</div>
-                <div class="tile" data-state="present">e</div>
-                <div class="tile" data-state="present">r</div>
+                <div class="tile" data-state="correct">汉</div>
+                <div class="tile" data-state="correct">字</div>
             </div>
             <div class="row">
-                <div class="tile" data-state="correct">d</div>
-                <div class="tile" data-state="correct">r</div>
-                <div class="tile" data-state="correct">a</div>
-                <div class="tile" data-state="correct">p</div>
-                <div class="tile" data-state="correct">e</div>
-            </div>
-            <div class="row">
-                <div class="tile" data-state="empty"></div>
-                <div class="tile" data-state="empty"></div>
-                <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
             </div>
             <div class="row">
                 <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
-                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
                 <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
             </div>
             <div class="row">
                 <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
                 <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
+                <div class="tile" data-state="empty"></div>
+                <div class="tile" data-state="empty"></div>
+            </div>
+            <div class="row">
                 <div class="tile" data-state="empty"></div>
                 <div class="tile" data-state="empty"></div>
             </div>
@@ -116,11 +159,5 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <a href="#">© 2025 The New York Times Company</a>
-        <a href="#">NYTimes.com</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-    </footer>
 </body>
 </html>
