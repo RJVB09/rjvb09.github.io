@@ -124,6 +124,52 @@
         </main>
 
         <script>
+            const fallbackCharacters = ['的', '一', '是', '在', '不', '了', '有', '和', '人', '这', 
+                                            '中', '大', '为', '上', '个', '国', '我', '以', '要', '他',
+                                            '时', '来', '用', '们', '生', '到', '作', '地', '于', '出', '家'];
+            
+            // ['word', 'pinyin', 'definition'],
+            const fallbackWords = [
+                ['中国', 'zhōng guó', 'China'],
+                ['我们', 'wǒ men', 'We/Us'],
+                ['这个', 'zhè ge', 'This/These'],
+                ['国家', 'guó jiā', 'Country/Home country']
+            ]
+
+            async function loadGame() {
+                let words;
+
+                try {
+                    // Fetch the CSV file
+                    const response = await fetch('words.csv');
+                    const csvText = await response.text();
+                    
+                    // Parse CSV (simple parsing - assumes no commas in data)
+                    const lines = csvText.trim().split('\n');
+                    words = [];
+                    
+                    // Skip header row and process each line
+                    for (let i = 1; i < lines.length; i++) {
+                        const [index, word_hanzi, word_pinyin, word_def] = lines[i].split(',');
+                        if (word_hanzi && word_hanzi.trim()) {
+                            // Trim the row and put it in the words list
+                            words.push([word_hanzi.trim(), word_pinyin.trim(), word_def.trim()]);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading character keyboard:', error);
+                    // Fallback to a default set of characters if CSV fails to load
+                    words = fallbackWords;
+                }
+
+                console.log(words)
+
+                const i = Math.floor(Math.random() * words.length);
+                const [word_hanzi, word_pinyin, word_def] = words[i]
+
+                console.log(word_hanzi, word_pinyin, word_def)
+            }
+
             // Function to load and parse the CSV file
             async function loadCharacterKeyboard() {
                 try {
@@ -149,9 +195,6 @@
                 } catch (error) {
                     console.error('Error loading character keyboard:', error);
                     // Fallback to a default set of characters if CSV fails to load
-                    const fallbackCharacters = ['的', '一', '是', '在', '不', '了', '有', '和', '人', '这', 
-                                            '中', '大', '为', '上', '个', '国', '我', '以', '要', '他',
-                                            '时', '来', '用', '们', '生', '到', '作', '地', '于', '出'];
                     generateKeyboard(fallbackCharacters);
                 }
             }
@@ -163,7 +206,7 @@
                 
                 // Determine how to split characters into rows
                 // You can adjust these values based on your preferred layout
-                const charsPerRow = 10;
+                const charsPerRow = 25;
                 const rows = Math.ceil(characters.length / charsPerRow);
                 
                 // Create keyboard rows
@@ -244,6 +287,7 @@
             }
 
             // Initialize the keyboard when the page loads
+            document.addEventListener('DOMContentLoaded', loadGame);
             document.addEventListener('DOMContentLoaded', loadCharacterKeyboard);
         </script>
     </main>
