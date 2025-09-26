@@ -271,3 +271,37 @@ input[type="submit"]:active {
         font-size: 20px;
     }
 }
+
+.toast {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'LubrifontSC', 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+    background: #333;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.toast.fade-out {
+    opacity: 0;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.tile.flip {
+  animation: flip 0.5s ease;
+}

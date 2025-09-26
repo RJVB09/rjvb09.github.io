@@ -219,6 +219,7 @@
                 }
             }
 
+            let keys = [];
             // Function to generate the keyboard layout
             function generateKeyboard(characters) {
                 const keyboard = document.getElementById('character-keyboard');
@@ -245,7 +246,9 @@
                         keyButton.className = 'key';
                         keyButton.textContent = char;
                         keyButton.setAttribute('data-key', char);
-                        keyButton.setAttribute('aria-label', `Character ${char}`);
+                        keyButton.setAttribute('aria-label', `${char}`);
+
+                        keys.push(keyButton);
                         
                         // Add click event handler
                         keyButton.addEventListener('click', () => {
@@ -302,19 +305,38 @@
 
                     // Fill in the hint colors in the html and check with the word_hanzi
                     for (let i = 0; i < tiles.length; i++) {
-                        tiles[i].textContent = guess[i];
-                        if (word_hanzi.includes(guess[i]) && word_hanzi[i] == guess[i]) {
-                            tiles[i].setAttribute('data-state', 'correct');
-                        } else if (word_hanzi.includes(guess[i]) && word_hanzi[i] != guess[i]) {
-                            tiles[i].setAttribute('data-state', 'present');
-                        } else {
-                            tiles[i].setAttribute('data-state', 'absent');
-                        } 
+                        // trigger flips
+                        setTimeout(() => {
+                            tiles[i].classList.add('flip');
+                        }, i * 250); // 250ms delay between tiles
+
+                        const keyElement = keys.find(k => k.getAttribute('data-key') === guess[i]); // Find the key on the onscreen keyboard and color it
+
+                        setTimeout(() => {
+                            // Update the color of the keys and of the tiles
+                            if (word_hanzi.includes(guess[i]) && word_hanzi[i] == guess[i]) {
+                                tiles[i].setAttribute('data-state', 'correct');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'correct'); }
+                            } else if (word_hanzi.includes(guess[i]) && word_hanzi[i] != guess[i]) {
+                                tiles[i].setAttribute('data-state', 'present');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'present'); }
+                            } else {
+                                tiles[i].setAttribute('data-state', 'absent');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'absent'); }
+                            }
+                        }, i * 250 + 125); // Change colors halfway during the animation of the tiles
+
+                        // remove flip after animation so it can be re-applied next time
+                        tiles[i].addEventListener('animationend', () => {
+                            tiles[i].classList.remove('flip');
+                        }, { once: true });
+
+                        tiles[i].textContent = guess[i]; // Fill the character in into the boxes (could be redundant)
                     }
 
                     if (word_hanzi == guess) {
                         console.log('You Win!');
-                        alert(`You WIN!, Answer: ${word_hanzi}, ${word_pinyin} \n ${word_def}`);
+                        showMessage(`You WIN!, Answer: ${word_hanzi}, ${word_pinyin}, ${word_def}`, 10000000);
                         finished = true;
                         return;
                     }
@@ -325,7 +347,7 @@
 
                     if (guess_number >= 20) {
                         console.log('You Lose!');
-                        alert(`You Lose, Answer: ${word_hanzi}, ${word_pinyin} \n ${word_def}`);
+                        showMessage(`You Lose, Answer: ${word_hanzi}, ${word_pinyin}, ${word_def}`, 10000000);
                         finished = true;
                         return;
                     }
@@ -333,11 +355,11 @@
                     //console.log('Word not found.');
                     // Spawn dialog window informing about what went wrong
                     if (guess.length < 2) {
-                        console.log('Word too short.');
-                        alert('Word too short.');
+                        console.log('Not enough characters');
+                        showMessage('Not enough characters', 2000);
                     } else {
-                        console.log('Word is not a valid HSK 3 word.')
-                        alert('Word is not a valid HSK 3 word.');
+                        console.log('Word is not in the HSK 3 word list')
+                        showMessage('Word is not in the HSK 3 word list', 2000);
                     }
                 }
             }
@@ -397,6 +419,19 @@
                 console.log(guess);
                 if (!finished) { updateGuessDisplay(); }
             }
+
+            function showMessage(message, duration = 1000) {
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = message;
+                messageDiv.className = 'toast';  // CSS animates it
+                document.body.appendChild(messageDiv);
+
+                setTimeout(() => {
+                    messageDiv.classList.add('fade-out');
+                    messageDiv.addEventListener('transitionend', () => messageDiv.remove());
+                }, duration);
+            }
+
 
             // Initialize the keyboard when the page loads
             document.addEventListener('DOMContentLoaded', loadGame);
