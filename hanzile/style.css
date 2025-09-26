@@ -67,6 +67,10 @@ body {
     font-family: 'LubrifontSC', 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
+h2 {
+    font-family: 'LubrifontSC', 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
 .header button {
     background: none;
     border: none;
