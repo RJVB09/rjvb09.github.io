@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>容易的汉字le | Doable Hanzile</title>
+    <link rel="icon" type="image/x-icon" href="hanzile_icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <button aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+            </svg>
+        </button>
+        <h1>容易的汉字le</h1>
+        <div>
+            <button aria-label="Help" onclick="document.getElementById('how-to-play').scrollIntoView({behavior: 'smooth'})">
+                <h1>?</h1>
+            </button>
+            <button aria-label="Settings">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <div class="board">
+            <!-- First column with 10 rows -->
+            <div class="board-column">
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+            </div>
+            
+            <!-- Second column with 10 rows -->
+            <div class="board-column">
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+            </div>
+
+            <!-- Third column with 10 rows -->
+            <div class="board-column">
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+            </div>
+
+            <!-- Fourth column with 10 rows -->
+            <div class="board-column">
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+                <div class="row">
+                    <div class="tile" data-state="empty"></div>
+                    <div class="tile" data-state="empty"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="word_input" name="word_input" required placeholder="Type 2 chinese characters here">
+            <input type="submit" onclick="setGuess()" value="Submit">
+        </div>
+
+        <div class="game-container">
+            <div class="board">
+                <!-- Your existing board content -->
+            </div>
+
+            <div class="keyboard" id="character-keyboard">
+                <!-- This will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <section id="how-to-play">
+            <h2>How to Play</h2>
+            <p>Guess the correct two-character Chinese word in 40 tries.</p>
+            <ul>
+                <li>Type characters in the input field using a chinese keyboard and press SUBMIT to put them in the tiles, confirm your guess using ENTER. Alternatively you can use the on screen "keyboard".</li>
+                <li><span style="font-size: 40px; color: var(--key-bg-radical);">■</span> = the guess contains a radical that is also in the answer on this tile.</li>
+                <li><span style="font-size: 40px; color: var(--key-bg-pinyin);">■</span> = the guess has the same pinyin syllable as the answer on this tile.</li>
+                <li><span style="font-size: 40px; color: var(--key-bg-correct);">■</span> = correct character in the correct spot.</li>
+                <li><span style="font-size: 40px; color: var(--key-bg-present);">■</span> = character is in the word but in a different spot.</li>
+                <li><span style="font-size: 40px; color: var(--key-bg-absent);">■</span> = character is not in the word.</li>
+            </ul>
+        </section>
+
+
+        <script>
+            const fallbackCharacters = ['的', '一', '是', '在', '不', '了', '有', '和', '人', '这', 
+                                            '中', '大', '为', '上', '个', '国', '我', '以', '要', '他',
+                                            '时', '来', '用', '们', '生', '到', '作', '地', '于', '出', '家'];
+            
+            // ['word', 'pinyin', 'definition'],
+            const fallbackWords = [
+                ['中国', 'zhōng guó', 'China'],
+                ['我们', 'wǒ men', 'We/Us'],
+                ['这个', 'zhè ge', 'This/These'],
+                ['国家', 'guó jiā', 'Country/Home country']
+            ]
+
+            let words;
+            let finished = false;
+
+            let word_hanzi;
+            let word_pinyin;
+            let word_def;
+
+            let guess = '';
+            let guess_number = 0;
+
+            async function loadGame() {
+                try {
+                    // Fetch the CSV file
+                    const response = await fetch('words.csv');
+                    const csvText = await response.text();
+                    
+                    // Parse CSV (simple parsing - assumes no commas in data)
+                    const lines = csvText.trim().split('\n');
+                    words = [];
+                    
+                    // Skip header row and process each line
+                    for (let i = 1; i < lines.length; i++) {
+                        const [index, word_hanzi, word_pinyin, word_def] = lines[i].split(',');
+                        if (word_hanzi && word_hanzi.trim()) {
+                            // Trim the row and put it in the words list
+                            words.push([word_hanzi.trim(), word_pinyin.trim(), word_def.trim()]);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading character keyboard:', error);
+                    // Fallback to a default set of characters if CSV fails to load
+                    words = fallbackWords;
+                }
+
+                console.log(words)
+
+                const i = Math.floor(Math.random() * words.length);
+                [word_hanzi, word_pinyin, word_def] = words[i]
+
+                console.log(word_hanzi, word_pinyin, word_def)
+            }
+
+            // Function to load and parse the CSV file
+            async function loadCharacterKeyboard() {
+                try {
+                    // Fetch the CSV file
+                    const response = await fetch('characters.csv');
+                    const csvText = await response.text();
+                    
+                    // Parse CSV (simple parsing - assumes no commas in data)
+                    const lines = csvText.trim().split('\n');
+                    const characters = [];
+                    
+                    // Skip header row and process each line
+                    for (let i = 1; i < lines.length; i++) {
+                        const [index, character] = lines[i].split(',');
+                        if (character && character.trim()) {
+                            characters.push(character.trim());
+                        }
+                    }
+                    
+                    // Generate keyboard layout
+                    generateKeyboard(characters);
+                    
+                } catch (error) {
+                    console.error('Error loading character keyboard:', error);
+                    // Fallback to a default set of characters if CSV fails to load
+                    generateKeyboard(fallbackCharacters);
+                }
+            }
+
+            let keys = [];
+            // Function to generate the keyboard layout
+            function generateKeyboard(characters) {
+                const keyboard = document.getElementById('character-keyboard');
+                keyboard.innerHTML = '';
+                
+                // Determine how to split characters into rows
+                // You can adjust these values based on your preferred layout
+                const charsPerRow = 25;
+                const rows = Math.ceil(characters.length / charsPerRow);
+                
+                // Create keyboard rows
+                for (let row = 0; row < rows; row++) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'keyboard-row';
+                    
+                    // Get characters for this row
+                    const startIndex = row * charsPerRow;
+                    const endIndex = Math.min(startIndex + charsPerRow, characters.length);
+                    const rowCharacters = characters.slice(startIndex, endIndex);
+                    
+                    // Create keys for each character in this row
+                    rowCharacters.forEach(char => {
+                        const keyButton = document.createElement('button');
+                        keyButton.className = 'key';
+                        keyButton.textContent = char;
+                        keyButton.setAttribute('data-key', char);
+                        keyButton.setAttribute('aria-label', `${char}`);
+
+                        keys.push(keyButton);
+                        
+                        // Add click event handler
+                        keyButton.addEventListener('click', () => {
+                            handleCharacterInput(char);
+                        });
+                        
+                        rowDiv.appendChild(keyButton);
+                    });
+                    
+                    keyboard.appendChild(rowDiv);
+                }
+                
+                // Add special function keys row (Enter, Backspace, etc.)
+                const functionRow = document.createElement('div');
+                functionRow.className = 'keyboard-row';
+                
+                // Enter key
+                const enterKey = document.createElement('button');
+                enterKey.className = 'key wide';
+                enterKey.textContent = 'Enter';
+                enterKey.setAttribute('data-key', 'enter');
+                enterKey.addEventListener('click', handleEnter);
+                functionRow.appendChild(enterKey);
+                
+                // Backspace key
+                const backspaceKey = document.createElement('button');
+                backspaceKey.className = 'key wide';
+                backspaceKey.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path fill="currentColor" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>
+                    </svg>
+                `;
+                backspaceKey.setAttribute('data-key', 'backspace');
+                backspaceKey.addEventListener('click', handleBackspace);
+                functionRow.appendChild(backspaceKey);
+                
+                keyboard.appendChild(functionRow);
+            }
+
+            function tryGuess() {
+                // Check if the word is valid
+                const exists = words.some(row => row[0] === guess);
+                if (exists) {
+                    console.log('Word found!');
+                    // let the player win when correct
+
+                    // Get all rows in the board
+                    const rows = document.querySelectorAll('.board .row');
+                    if (guess_number >= rows.length) return; // safety
+
+                    // Select the current row
+                    const currentRow = rows[guess_number];
+                    const tiles = currentRow.querySelectorAll('.tile');
+
+                    // Fill in the hint colors in the html and check with the word_hanzi
+                    for (let i = 0; i < tiles.length; i++) {
+                        // trigger flips
+                        setTimeout(() => {
+                            tiles[i].classList.add('flip');
+                        }, i * 250); // 250ms delay between tiles
+
+                        const keyElement = keys.find(k => k.getAttribute('data-key') === guess[i]); // Find the key on the onscreen keyboard and color it
+
+                        setTimeout(() => {
+                            // Update the color of the keys and of the tiles
+                            if (word_hanzi.includes(guess[i]) && word_hanzi[i] == guess[i]) {
+                                tiles[i].setAttribute('data-state', 'correct');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'correct'); }
+                            } else if (word_hanzi.includes(guess[i]) && word_hanzi[i] != guess[i]) {
+                                tiles[i].setAttribute('data-state', 'present');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'present'); }
+                            } else {
+                                tiles[i].setAttribute('data-state', 'absent');
+                                if (keyElement) { keyElement.setAttribute('data-state', 'absent'); }
+                            }
+                        }, i * 250 + 125); // Change colors halfway during the animation of the tiles
+
+                        // remove flip after animation so it can be re-applied next time
+                        tiles[i].addEventListener('animationend', () => {
+                            tiles[i].classList.remove('flip');
+                        }, { once: true });
+
+                        tiles[i].textContent = guess[i]; // Fill the character in into the boxes (could be redundant)
+                    }
+
+                    if (word_hanzi == guess) {
+                        console.log('You Win!');
+                        showMessage(`You WIN!, Answer: ${word_hanzi}, ${word_pinyin}, ${word_def}`, 10000000);
+                        finished = true;
+                        return;
+                    }
+
+                    // Step to the next guess
+                    guess_number += 1;
+                    guess = '';
+
+                    if (guess_number >= 20) {
+                        console.log('You Lose!');
+                        showMessage(`You Lose, Answer: ${word_hanzi}, ${word_pinyin}, ${word_def}`, 10000000);
+                        finished = true;
+                        return;
+                    }
+                } else {
+                    //console.log('Word not found.');
+                    // Spawn dialog window informing about what went wrong
+                    if (guess.length < 2) {
+                        console.log('Not enough characters');
+                        showMessage('Not enough characters', 2000);
+                    } else {
+                        console.log('Word is not in the HSK 3 word list')
+                        showMessage('Word is not in the HSK 3 word list', 2000);
+                    }
+                }
+            }
+            
+            // Update the squares in the html
+            function updateGuessDisplay() {
+                // Get all rows in the board
+                const rows = document.querySelectorAll('.board .row');
+                if (guess_number >= rows.length) return; // safety
+
+                // Select the current row
+                const currentRow = rows[guess_number];
+                const tiles = currentRow.querySelectorAll('.tile');
+
+                // Fill the tiles with guess characters or empty
+                for (let i = 0; i < tiles.length; i++) {
+                    if (i < guess.length) {
+                        tiles[i].textContent = guess[i];
+                        tiles[i].setAttribute('data-state', 'filled');
+                    } else {
+                        tiles[i].textContent = '';
+                        tiles[i].setAttribute('data-state', 'empty');
+                    }
+                }
+            }
+
+            function setGuess() {
+                let inputField = document.getElementById("word_input");
+
+                guess = inputField.value.slice(0,2);
+                if (!finished) { updateGuessDisplay(); }
+            }
+
+            // Character input handler
+            function handleCharacterInput(character) {
+                console.log('Character pressed:', character);
+                // Add character to guess if still shorter than 2
+                if (guess.length < 2) {
+                    guess += character;
+                }
+                console.log(guess);
+                if (!finished) { updateGuessDisplay(); }
+            }
+
+            // Enter key handler
+            function handleEnter() {
+                console.log('Enter pressed');
+                
+                if (!finished) { tryGuess(); }
+            }
+
+            // Backspace key handler
+            function handleBackspace() {
+                console.log('Backspace pressed');
+                // Remove character from guess
+                guess = guess.slice(0, -1);
+                console.log(guess);
+                if (!finished) { updateGuessDisplay(); }
+            }
+
+            function showMessage(message, duration = 1000) {
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = message;
+                messageDiv.className = 'toast';  // CSS animates it
+                document.body.appendChild(messageDiv);
+
+                setTimeout(() => {
+                    messageDiv.classList.add('fade-out');
+                    messageDiv.addEventListener('transitionend', () => messageDiv.remove());
+                }, duration);
+            }
+
+
+            // Initialize the keyboard when the page loads
+            document.addEventListener('DOMContentLoaded', loadGame);
+            document.addEventListener('DOMContentLoaded', loadCharacterKeyboard);
+            
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    if (guess != '') {
+                        event.preventDefault();
+                    }
+                    handleEnter();
+                }
+            });
+            
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Backspace' && guess != '') {
+                    handleBackspace();
+                    // Prevent browser from going back
+                    event.preventDefault();
+                }
+            });
+        </script>
+    </main>
+
+</body>
+</html>
