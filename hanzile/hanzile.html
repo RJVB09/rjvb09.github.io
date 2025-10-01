@@ -300,6 +300,7 @@
 
             function tryGuess() {
                 // Check if the word is valid
+                console.log("Guess: ", guess); // stil there
                 const exists = words.some(row => row[0] === guess);
                 if (exists) {
                     console.log('Word found!');
@@ -313,35 +314,43 @@
                     const currentRow = rows[guess_number];
                     const tiles = currentRow.querySelectorAll('.tile');
 
+                    console.log("Guess2: ", guess);
+
                     // Fill in the hint colors in the html and check with the word_hanzi
                     for (let i = 0; i < tiles.length; i++) {
-                        // trigger flips
-                        setTimeout(() => {
-                            tiles[i].classList.add('flip');
-                        }, i * 250); // 250ms delay between tiles
+                        // Use IIFE to capture the current value of i and currentGuess (in a sense just creating a local lambda expression in which we pass the index and char)
+                        ((index, char) => {
+                            // trigger flips
+                            setTimeout(() => {
+                                tiles[index].classList.add('flip');
+                            }, index * 250); // 250ms delay between tiles
 
-                        const keyElement = keys.find(k => k.getAttribute('data-key') === guess[i]); // Find the key on the onscreen keyboard and color it
+                            const keyElement = keys.find(k => k.getAttribute('data-key') === char);
 
-                        setTimeout(() => {
-                            // Update the color of the keys and of the tiles
-                            if (word_hanzi.includes(guess[i]) && word_hanzi[i] == guess[i]) {
-                                tiles[i].setAttribute('data-state', 'correct');
-                                if (keyElement) { keyElement.setAttribute('data-state', 'correct'); }
-                            } else if (word_hanzi.includes(guess[i]) && word_hanzi[i] != guess[i]) {
-                                tiles[i].setAttribute('data-state', 'present');
-                                if (keyElement) { keyElement.setAttribute('data-state', 'present'); }
-                            } else {
-                                tiles[i].setAttribute('data-state', 'absent');
-                                if (keyElement) { keyElement.setAttribute('data-state', 'absent'); }
-                            }
-                        }, i * 250 + 125); // Change colors halfway during the animation of the tiles
+                            setTimeout(() => {
+                                // Update the color of the keys and of the tiles
+                                if (word_hanzi.includes(char) && word_hanzi[index] === char) {
+                                    tiles[index].setAttribute('data-state', 'correct');
+                                    console.log(char, "correct");
+                                    if (keyElement) { keyElement.setAttribute('data-state', 'correct'); }
+                                } else if (word_hanzi.includes(char) && word_hanzi[index] !== char) {
+                                    tiles[index].setAttribute('data-state', 'present');
+                                    console.log(char, "present");
+                                    if (keyElement) { keyElement.setAttribute('data-state', 'present'); }
+                                } else {
+                                    tiles[index].setAttribute('data-state', 'absent');
+                                    console.log(char, "absent");
+                                    if (keyElement) { keyElement.setAttribute('data-state', 'absent'); }
+                                }
+                            }, index * 250 + 125); // Change colors halfway during the animation of the tiles
 
-                        // remove flip after animation so it can be re-applied next time
-                        tiles[i].addEventListener('animationend', () => {
-                            tiles[i].classList.remove('flip');
-                        }, { once: true });
+                            // remove flip after animation so it can be re-applied next time
+                            tiles[index].addEventListener('animationend', () => {
+                                tiles[index].classList.remove('flip');
+                            }, { once: true });
 
-                        tiles[i].textContent = guess[i]; // Fill the character in into the boxes (could be redundant)
+                            tiles[index].textContent = char; // Fill the character in into the boxes
+                        })(i, guess[i]);
                     }
 
                     if (word_hanzi == guess) {
